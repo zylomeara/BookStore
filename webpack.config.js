@@ -1,5 +1,6 @@
 const path = require('path'),
     webpack = require('webpack');
+    HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 
 function srcPath(subdir) {
@@ -15,7 +16,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/[name].bundle.js',
-        publicPath: '/dist'
+        publicPath: '/'
     },
     mode: 'development',
     devtool: 'cheap-eval-source-map',
@@ -27,8 +28,9 @@ module.exports = {
         poll: true
     },
     devServer: {
-        contentBase: "./public",
-        hot: true
+        // contentBase: "./public",
+        // hot: true
+        historyApiFallback: true
     },
     module: {
         rules: [
@@ -69,5 +71,8 @@ module.exports = {
             alwaysNotify: true,
             // contentImage: abs('..', '..', 'assets', 'webpack.png'),
         }),
+        new HtmlWebpackPlugin({
+            template: 'public/index.html'
+        })
     ]
 };
