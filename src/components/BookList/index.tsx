@@ -1,6 +1,9 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import withBookstoreService from "../hoc/with-bookstore-service";
+import {booksLoaded, cancelBookOrder, orderBook} from "../../actions";
+import BookListItem from "./BookListItem";
+
 
 class BookList extends React.Component<{ books: any, bookstoreService: any }> {
     componentDidMount() {
@@ -12,30 +15,27 @@ class BookList extends React.Component<{ books: any, bookstoreService: any }> {
 
 
     render() {
-        let {books} = this.props;
-
+        let {books, orderBooks} = this.props;
 
         return (
-            <ul>
-                {
-                    books.map((book) => <li key={book.id}>{book.id}</li>)
-                }
-            </ul>
+            books.map(item =>
+                <BookListItem
+                    key={item.id}
+                    bookData={item}
+                    onDelete={this.props.cancelBookOrder}
+                    onAdd={this.props.orderBook}
+                    isOrdered={Object.keys(orderBooks).includes('' + item.id)}
+                />
+            )
         )
     }
 }
 
-const mapStateToProps = ({books}) => ({books});
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        booksLoaded: (newBooks) => {
-            dispatch({
-                type: 'BOOKS_LOADED',
-                payload: newBooks
-            })
-        }
-    }
-}
+const mapStateToProps = ({books, orderBooks}) => ({books, orderBooks});
 
-export default withBookstoreService()(connect(mapStateToProps, mapDispatchToProps)(BookList));
+const mapDispatchToProps = {booksLoaded, orderBook, cancelBookOrder};
+
+export default withBookstoreService()(
+    connect(mapStateToProps, mapDispatchToProps)(BookList)
+);
