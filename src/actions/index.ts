@@ -1,25 +1,24 @@
+import {Book, CreateOrUpdateBookOrderAction} from "../constants/ActionTypes";
 
-const booksLoaded = (newBooks) => {
+export const booksLoaded = (newBooks: Book[]) => {
     return {
-        type: 'BOOKS_LOADED',
+        type: 'LOAD_BOOKS',
         payload: newBooks
     }
 };
-const orderBook = (data) => {
+export const orderBook = (data: CreateOrUpdateBookOrderAction['payload']) => {
     return {
-        type: 'ORDER_BOOK',
+        type: 'CREATE_OR_UPDATE_BOOK_ORDER',
         payload: data
     }
 };
-const cancelBookOrder = (id) => {
+export const cancelBookOrder = (id: number) => {
     return {
-        type: 'CANCEL_BOOK_ORDER',
+        type: 'DELETE_BOOK_ORDER',
         payload: id
     }
 };
 
-export {
-    booksLoaded,
-    orderBook,
-    cancelBookOrder
-}
+export type BooksLoadedActionCreator = typeof booksLoaded;
+export type CreateOrUpdateBookOrderActionCreator = typeof orderBook;
+export type DeleteBookOrderActionCreator = typeof cancelBookOrder;

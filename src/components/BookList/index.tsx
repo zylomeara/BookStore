@@ -3,9 +3,19 @@ import {connect} from "react-redux";
 import withBookstoreService from "../hoc/with-bookstore-service";
 import {booksLoaded, cancelBookOrder, orderBook} from "../../actions";
 import BookListItem from "./BookListItem";
+import {AppState} from "../../reducers";
 
+type InjectedDispatch = {
+    booksLoaded: import('../../actions').BooksLoadedActionCreator;
+    cancelBookOrder: import('../../actions').DeleteBookOrderActionCreator;
+    orderBook: import('../../actions').CreateOrUpdateBookOrderActionCreator;
+}
 
-class BookList extends React.Component<{ books: any, bookstoreService: any }> {
+type Props = Pick<AppState, 'books' | 'orderBooks'>
+    & {bookstoreService: import('../../services/bookstore-service').default}
+    & InjectedDispatch
+
+class BookList extends React.Component<Props> {
     componentDidMount() {
         let {bookstoreService} = this.props;
         const data = bookstoreService.getBooks();
@@ -32,7 +42,7 @@ class BookList extends React.Component<{ books: any, bookstoreService: any }> {
 }
 
 
-const mapStateToProps = ({books, orderBooks}) => ({books, orderBooks});
+const mapStateToProps = ({books, orderBooks}: AppState) => ({books, orderBooks});
 
 const mapDispatchToProps = {booksLoaded, orderBook, cancelBookOrder};
 

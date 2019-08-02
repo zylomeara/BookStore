@@ -1,8 +1,11 @@
 import * as React from "react";
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux";
+import {AppState} from "../../reducers";
 
-const Header = ({orderBooks}) => {
+type Props = Pick<AppState, 'orderBooks'>
+
+const Header = ({orderBooks}: Props) => {
 
     return <div style={{padding: '10px'}}>
         <Link style={{marginRight: '25px'}} to={'/'}>Home</Link>
@@ -10,6 +13,6 @@ const Header = ({orderBooks}) => {
     </div>
 };
 
-const mapStateToProps = ({orderBooks}) => ({orderBooks});
+const mapStateToProps = ({orderBooks}: AppState) => ({orderBooks});
 
 export default connect(mapStateToProps)(Header);

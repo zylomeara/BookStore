@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { BookstoreServiceConsumer } from '../bookstore-service-context';
 
-const withBookstoreService = () => (Wrapped) => {
+const withBookstoreService = <P extends object>() => (Wrapped: React.ComponentType<P>) => {
 
-    return (props) => {
+    return (props: P) => {
         return (
             <BookstoreServiceConsumer>
                 {

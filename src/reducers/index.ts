@@ -1,33 +1,19 @@
-interface Book {
-    id: number;
-    name: string;
-    price: number;
-    author: string
-}
+import {ActionTypes, State} from "../constants/ActionTypes";
 
-interface State {
-    books: Book[],
-    orderBooks: Record<string, number>
-}
-
-export type Action =
-    {type: 'BOOKS_LOADED'; payload: Book[]} |
-    {type: 'ORDER_BOOK'; payload: {bookId: Book['id'], count: number}} |
-    {type: 'CANCEL_BOOK_ORDER'; payload: Book['id']}
 
 const initialState: State = {
     books: [],
     orderBooks: {1: 1, 4: 1}
 };
 
-const reducer = (state = initialState, action: Action) => {
+const reducer = (state: State = initialState, action: ActionTypes): State => {
     switch (action.type) {
-        case 'BOOKS_LOADED':
+        case 'LOAD_BOOKS':
             return {
                 ...state,
                 books: action.payload
             };
-        case 'ORDER_BOOK':
+        case 'CREATE_OR_UPDATE_BOOK_ORDER':
             return {
                 ...state,
                 orderBooks: {
@@ -35,7 +21,7 @@ const reducer = (state = initialState, action: Action) => {
                     [action.payload.bookId]: action.payload.count
                 }
             };
-        case 'CANCEL_BOOK_ORDER':
+        case 'DELETE_BOOK_ORDER':
             let filterBooks = ({[action.payload]: _, ...rest}) => rest;
 
             return {
@@ -49,3 +35,4 @@ const reducer = (state = initialState, action: Action) => {
 };
 
 export default reducer;
+export type AppState = State
