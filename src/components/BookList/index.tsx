@@ -12,7 +12,7 @@ type InjectedDispatch = {
 }
 
 type Props = Pick<AppState, 'books' | 'orderBooks'>
-    & {bookstoreService: import('../../services/bookstore-service').default}
+    & { bookstoreService: import('../../services/bookstore-service').default }
     & InjectedDispatch
 
 class BookList extends React.Component<Props> {
@@ -28,15 +28,19 @@ class BookList extends React.Component<Props> {
         let {books, orderBooks} = this.props;
 
         return (
-            books.map(item =>
-                <BookListItem
-                    key={item.id}
-                    bookData={item}
-                    onDelete={this.props.cancelBookOrder}
-                    onAdd={this.props.orderBook}
-                    isOrdered={Object.keys(orderBooks).includes('' + item.id)}
-                />
-            )
+            <div style={{textAlign: 'center'}}>
+                {
+                    books.map(item =>
+                        <BookListItem
+                            key={item.id}
+                            bookData={item}
+                            onDelete={this.props.cancelBookOrder}
+                            onAdd={this.props.orderBook}
+                            isOrdered={Object.keys(orderBooks).includes('' + item.id)}
+                        />
+                    )
+                }
+            </div>
         )
     }
 }

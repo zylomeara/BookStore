@@ -8,7 +8,8 @@ export interface Book {
     id: number;
     name: string;
     price: number;
-    author: string
+    author: string;
+    image: string
 }
 
 export interface State {
