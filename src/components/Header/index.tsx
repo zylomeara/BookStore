@@ -4,11 +4,25 @@ import {connect} from "react-redux";
 import {AppState} from "../../reducers";
 import {Menu} from 'antd';
 import {withRouter} from 'react-router-dom';
+import {useEffect} from "react";
+import {booksLoaded} from "../../actions";
+import withBookstoreService from "../hoc/with-bookstore-service";
+
+type InjectedDispatch = {
+    booksLoaded: import('../../actions').BooksLoadedActionCreator;
+}
 
 type Props = Pick<AppState, 'orderBooks'>
+    & InjectedDispatch
+    & { bookstoreService: import('../../services/bookstore-service').default }
+    & { history: any }
 
-const Header = ({orderBooks, history}: Props) => {
-    console.log(history.location.pathname);
+const Header = ({orderBooks, history, booksLoaded, bookstoreService}: Props) => {
+    useEffect(() => {
+        const data = bookstoreService.getBooks();
+
+        booksLoaded(data);
+    }, []);
 
     return <Menu
         mode={'horizontal'}
@@ -28,4 +42,6 @@ const Header = ({orderBooks, history}: Props) => {
 
 const mapStateToProps = ({orderBooks}: AppState) => ({orderBooks});
 
-export default connect(mapStateToProps)(withRouter(Header));
+const mapDispatchToProps = {booksLoaded};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withBookstoreService()(Header)));
