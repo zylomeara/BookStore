@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {cancelBookOrder, orderBook} from "../../actions";
 import BookListItem from "./BookListItem";
 import {AppState} from "../../reducers";
+import './style.less';
 
 type InjectedDispatch = {
     cancelBookOrder: import('../../actions').DeleteBookOrderActionCreator;
@@ -17,7 +18,7 @@ function BookList(props: Props) {
     let {books, orderBooks} = props;
 
     return (
-        <div style={{textAlign: 'center'}}>
+        <div className={'BookList'}>
             {
                 books.map(item =>
                     <BookListItem

@@ -21,10 +21,9 @@ const CartListItem = ({cartData, quantity, onChange}: Props) => {
             <Divider type={'vertical'}/>
             <div className={'CartListItem__Col'} style={{width: '100px'}}>{cartData.price} руб.</div>
             <Input
-                style={{width: '80px'}}
                 type="number"
                 value={quantity}
-                min={'0'}
+                min={'1'}
                 onChange={
                     (event) =>
                         onChange({bookId: cartData.id, count: +event.target.value})}/>

@@ -1,14 +1,20 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import CartListItem from "./CartListItem";
-import {orderBook} from "../../actions";
+import {cancelBookOrder, orderBook} from "../../actions";
 import {AppState} from "../../reducers";
 import {Book} from "../../constants/ActionTypes";
-import {List} from "antd";
+import {Button, Icon, List} from "antd";
 
-type Props = Pick<AppState, 'books' | 'orderBooks'> & {orderBook: typeof orderBook}
+type InjectedDispatch = {
+    orderBook: typeof orderBook;
+    cancelBookOrder: typeof cancelBookOrder;
+}
 
-const CartList = ({books, orderBooks, orderBook}: Props) => {
+type Props = Pick<AppState, 'books' | 'orderBooks'>
+    & InjectedDispatch
+
+const CartList = ({books, orderBooks, orderBook, cancelBookOrder}: Props) => {
     let cost = Object.entries(orderBooks)
         .reduce((acc, [id, count]) => {
             let foundBook = books.find(book => book.id === +id);
@@ -21,8 +27,7 @@ const CartList = ({books, orderBooks, orderBook}: Props) => {
 
     return <>
         <List
-            header={<div>Товары</div>}
-            // footer={<div>Footer</div>}
+            header={<div>Товары:</div>}
             bordered
             dataSource={
                 Object.keys(orderBooks)
@@ -31,7 +36,28 @@ const CartList = ({books, orderBooks, orderBook}: Props) => {
             }
             renderItem={(book: Book) => (
                 <List.Item
-                    actions={[<div key={1}>1</div>]}
+                    actions={[
+                        <Button
+                            key={1}
+                            onClick={() =>
+                                orderBooks[book.id] > 1 && orderBook({bookId: book.id, count: orderBooks[book.id]-1})}
+                        ><Icon type={'minus'}/></Button>,
+                        <Button
+                            key={2}
+                            onClick={() =>
+                                orderBook({bookId: book.id, count: orderBooks[book.id]+1})}
+                            type={'primary'}
+                        >
+                            <Icon type={'plus'}/>
+                        </Button>,
+                        <Button
+                            key={3}
+                            onClick={() =>
+                                cancelBookOrder(book.id)} type={'danger'}
+                        >
+                            <Icon type={'close'}/>
+                        </Button>,
+                    ]}
                 >
                     <CartListItem key={book.id} cartData={book} onChange={orderBook} quantity={orderBooks[book.id]}/>
                 </List.Item>
@@ -44,6 +70,6 @@ const CartList = ({books, orderBooks, orderBook}: Props) => {
 
 const mapStateToProps = ({books, orderBooks}: AppState) => ({books, orderBooks});
 
-const mapDispatchToProps = {orderBook};
+const mapDispatchToProps = {orderBook, cancelBookOrder};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartList);

@@ -11,8 +11,8 @@ interface Props {
 const BookListItem = ({bookData, isOrdered, onDelete, onAdd}: Props) => {
 
     return <Card
-        style={{width: 230, margin: 10, display: 'inline-block'}}
-        cover={<img style={{padding: '20px 20px 0 20px', height: 300}} src={bookData.image} alt={bookData.name}/>}
+        className={'BookList_BookListItem'}
+        cover={<img className={'BookList_BookListItem__img'} src={bookData.image} alt={bookData.name}/>}
         actions={[
                 <Button
                     key={1}
