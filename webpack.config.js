@@ -1,11 +1,6 @@
 const path = require('path'),
-    webpack = require('webpack');
     HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
-
-function srcPath(subdir) {
-    return path.join(__dirname, "src", subdir);
-}
 
 module.exports = {
     entry: {
@@ -20,7 +15,6 @@ module.exports = {
     },
     mode: 'development',
     devtool: 'cheap-eval-source-map',
-    // devtool: 'source-map',
     resolve: {
         extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
     },
@@ -28,8 +22,6 @@ module.exports = {
         poll: true
     },
     devServer: {
-        // contentBase: "./public",
-        // hot: true
         historyApiFallback: true
     },
     module: {

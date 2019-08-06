@@ -14,16 +14,16 @@ interface Props {
 const CartListItem = ({cartData, quantity, onChange}: Props) => {
 
     return (
-        <div className={'CartListItem'}>
-            <div className={'CartListItem__Col'} style={{width: '20px'}}>{cartData.id}</div>
-            <Divider type={'vertical'}/>
-            <div className={'CartListItem__Col'} style={{width: '500px'}}>{cartData.name}</div>
-            <Divider type={'vertical'}/>
-            <div className={'CartListItem__Col'} style={{width: '100px'}}>{cartData.price} руб.</div>
+        <div className={"CartListItem"}>
+            <div className={"CartListItem__Col"} style={{width: "20px"}}>{cartData.id}</div>
+            <Divider type={"vertical"}/>
+            <div className={"CartListItem__Col"} style={{width: "500px"}}>{cartData.name}</div>
+            <Divider type={"vertical"}/>
+            <div className={"CartListItem__Col"} style={{width: "100px"}}>{cartData.price} руб.</div>
             <Input
                 type="number"
                 value={quantity}
-                min={'1'}
+                min="1"
                 onChange={
                     (event) =>
                         onChange({bookId: cartData.id, count: +event.target.value})}/>

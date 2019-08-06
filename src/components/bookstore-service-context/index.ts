@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import BookstoreService from "../../services/bookstore-service";
 
 const bookstoreService = new BookstoreService();

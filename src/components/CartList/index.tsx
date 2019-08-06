@@ -5,25 +5,18 @@ import {cancelBookOrder, orderBook} from "../../actions";
 import {AppState} from "../../reducers";
 import {Book} from "../../constants/ActionTypes";
 import {Button, Icon, List} from "antd";
+import {getCost} from "./selectors";
 
 type InjectedDispatch = {
     orderBook: typeof orderBook;
     cancelBookOrder: typeof cancelBookOrder;
 }
 
-type Props = Pick<AppState, 'books' | 'orderBooks'>
+type Props = Pick<AppState, "books" | "orderBooks">
     & InjectedDispatch
+    & {cost: number}
 
-const CartList = ({books, orderBooks, orderBook, cancelBookOrder}: Props) => {
-    let cost = Object.entries(orderBooks)
-        .reduce((acc, [id, count]) => {
-            let foundBook = books.find(book => book.id === +id);
-
-            if (!foundBook)
-                return acc;
-
-            return acc + foundBook.price * count
-        }, 0);
+const CartList = ({books, orderBooks, orderBook, cancelBookOrder, cost}: Props) => {
 
     return <>
         <List
@@ -41,21 +34,21 @@ const CartList = ({books, orderBooks, orderBook, cancelBookOrder}: Props) => {
                             key={1}
                             onClick={() =>
                                 orderBooks[book.id] > 1 && orderBook({bookId: book.id, count: orderBooks[book.id]-1})}
-                        ><Icon type={'minus'}/></Button>,
+                        ><Icon type={"minus"}/></Button>,
                         <Button
                             key={2}
                             onClick={() =>
                                 orderBook({bookId: book.id, count: orderBooks[book.id]+1})}
-                            type={'primary'}
+                            type={"primary"}
                         >
-                            <Icon type={'plus'}/>
+                            <Icon type={"plus"}/>
                         </Button>,
                         <Button
                             key={3}
                             onClick={() =>
-                                cancelBookOrder(book.id)} type={'danger'}
+                                cancelBookOrder(book.id)} type={"danger"}
                         >
-                            <Icon type={'close'}/>
+                            <Icon type={"close"}/>
                         </Button>,
                     ]}
                 >
@@ -68,7 +61,12 @@ const CartList = ({books, orderBooks, orderBook, cancelBookOrder}: Props) => {
     </>;
 };
 
-const mapStateToProps = ({books, orderBooks}: AppState) => ({books, orderBooks});
+const mapStateToProps = (state: AppState) =>
+    ({
+        books: state.books,
+        orderBooks: state.orderBooks,
+        cost: getCost(state)
+    });
 
 const mapDispatchToProps = {orderBook, cancelBookOrder};
 

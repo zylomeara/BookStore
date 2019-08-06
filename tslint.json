@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "curly": true,
+    "quotemark": [true, "double"]
+  }
+}

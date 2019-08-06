@@ -1,20 +1,22 @@
 import * as React from "react";
-import {Link} from 'react-router-dom';
+import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {AppState} from "../../reducers";
-import {Menu} from 'antd';
-import {withRouter} from 'react-router-dom';
+import {Menu} from "antd";
+import {withRouter} from "react-router-dom";
 import {useEffect} from "react";
 import {booksLoaded} from "../../actions";
 import withBookstoreService from "../hoc/with-bookstore-service";
+import {BooksLoadedActionCreator} from "../../actions";
+import BookstoreService from "../../services/bookstore-service";
 
 type InjectedDispatch = {
-    booksLoaded: import('../../actions').BooksLoadedActionCreator;
+    booksLoaded: BooksLoadedActionCreator;
 }
 
-type Props = Pick<AppState, 'orderBooks'>
+type Props = Pick<AppState, "orderBooks">
     & InjectedDispatch
-    & { bookstoreService: import('../../services/bookstore-service').default }
+    & { bookstoreService: BookstoreService }
     & { history: any }
 
 const Header = ({orderBooks, history, booksLoaded, bookstoreService}: Props) => {
@@ -25,17 +27,17 @@ const Header = ({orderBooks, history, booksLoaded, bookstoreService}: Props) => 
     }, []);
 
     return <Menu
-        mode={'horizontal'}
-        theme={'dark'}
+        mode={"horizontal"}
+        theme={"dark"}
         selectedKeys={[history.location.pathname]}>
-        <Menu.Item key={'/goods'}>
-            <Link to={'/'}>Товары</Link>
+        <Menu.Item key={"/goods"}>
+            <Link to={"/"}>Товары</Link>
         </Menu.Item>
         <Menu.Item
-            key={'/cart'}
+            key={"/cart"}
             disabled={Object.keys(orderBooks).length < 1}
         >
-            <Link to={'/cart'}>Корзина</Link>
+            <Link to={"/cart"}>Корзина</Link>
         </Menu.Item>
     </Menu>
 };

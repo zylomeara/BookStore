@@ -8,12 +8,12 @@ const initialState: State = {
 
 const reducer = (state: State = initialState, action: ActionTypes): State => {
     switch (action.type) {
-        case 'LOAD_BOOKS':
+        case "LOAD_BOOKS":
             return {
                 ...state,
                 books: action.payload
             };
-        case 'CREATE_OR_UPDATE_BOOK_ORDER':
+        case "CREATE_OR_UPDATE_BOOK_ORDER":
             return {
                 ...state,
                 orderBooks: {
@@ -21,7 +21,7 @@ const reducer = (state: State = initialState, action: ActionTypes): State => {
                     [action.payload.bookId]: action.payload.count
                 }
             };
-        case 'DELETE_BOOK_ORDER':
+        case "DELETE_BOOK_ORDER":
             let filterBooks = ({[action.payload]: _, ...rest}) => rest;
 
             return {
