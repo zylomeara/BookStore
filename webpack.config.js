@@ -16,7 +16,7 @@ module.exports = {
     mode: 'development',
     devtool: 'cheap-eval-source-map',
     resolve: {
-        extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
+        extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.scss']
     },
     watchOptions: {
         poll: true
@@ -39,6 +39,20 @@ module.exports = {
                 ]
             },
             {
+                test: /\.s([ac])ss$/,
+                use: [
+                    {
+                        loader: 'style-loader', // creates style nodes from JS strings
+                    },
+                    {
+                        loader: 'css-loader', // translates CSS into CommonJS
+                    },
+                    {
+                        loader: 'sass-loader', // compiles SASS to CSS
+                    },
+                ],
+            },
+            {
                 test: /\.less$/,
                 use: [
                     {
@@ -48,11 +62,22 @@ module.exports = {
                         loader: 'css-loader', // translates CSS into CommonJS
                     },
                     {
-                        loader: 'less-loader', // compiles Less to CSS
+                        loader: 'less-loader', // compiles SASS to CSS
                         options: {
                             javascriptEnabled: true,
                             onlyCompileBundledFiles: true,
                         }
+                    },
+                ],
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader', // creates style nodes from JS strings
+                    },
+                    {
+                        loader: 'css-loader', // translates CSS into CommonJS
                     },
                 ],
             },

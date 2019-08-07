@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Book } from '../../../constants/ActionTypes';
 import { orderBook } from '../../../actions';
 import { Divider, Input } from 'antd';
-import './style.less';
+import './style.scss';
 
 interface Props {
   cartData: Book;

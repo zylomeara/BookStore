@@ -8,7 +8,7 @@ import {
 } from '../../actions';
 import BookListItem from './BookListItem';
 import { AppState } from '../../reducers';
-import './style.less';
+import './style.scss';
 
 type InjectedDispatch = {
   cancelBookOrder: DeleteBookOrderActionCreator;
