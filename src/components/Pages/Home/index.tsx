@@ -1,8 +1,6 @@
-import * as React from "react";
-import BookList from "../../BookList";
+import * as React from 'react';
+import BookList from '../../BookList';
 
-const Home = () => {
-    return <BookList />
-};
+const Home = () => <BookList/>;
 
 export default Home;

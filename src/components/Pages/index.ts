@@ -3,5 +3,5 @@ import Cart from './Cart';
 
 export {
     Home,
-    Cart
-}
+    Cart,
+};

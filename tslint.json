@@ -1,6 +1,6 @@
 {
+  "extends": "tslint-config-airbnb",
   "rules": {
-    "curly": true,
-    "quotemark": [true, "double"]
+    "variable-name": [true, "ban-keywords", "allow-pascal-case"]
   }
 }

@@ -1,14 +1,14 @@
-import * as React from "react";
-import BookstoreService from "../../services/bookstore-service";
+import * as React from 'react';
+import BookstoreService from '../../services/BookstoreService';
 
 const bookstoreService = new BookstoreService();
 
 const {
     Provider: BookstoreServiceProvider,
-    Consumer: BookstoreServiceConsumer
+    Consumer: BookstoreServiceConsumer,
 } = React.createContext(bookstoreService);
 
 export {
     BookstoreServiceConsumer,
-    BookstoreServiceProvider
-}
+    BookstoreServiceProvider,
+};
