@@ -19,9 +19,9 @@ type Props = Pick<AppState, 'orderBooks'>
 
 const Header = ({ orderBooks, history, booksLoaded, bookstoreService }: Props) => {
   useEffect(() => {
-    const data = bookstoreService.getBooks();
+    const request = bookstoreService.getBooks();
 
-    booksLoaded(data);
+    request.then(data => booksLoaded(data));
   },        []);
 
   return <Menu
